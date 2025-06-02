@@ -11,11 +11,11 @@
     padding: 20px;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
 }
 
 .home-content {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.25); /* Slightly more contrast */
     padding: 50px 70px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -46,7 +46,7 @@
 
 .app-name {
     display: inline-block;
-    color: #f0e68c;
+    color: #f0e68c; /* Khaki */
     font-weight: 700;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
@@ -72,7 +72,7 @@
     justify-content: center;
     gap: 25px;
     margin-top: 30px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Important for responsiveness */
 }
 
 .home-button {
@@ -85,12 +85,16 @@
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     animation: popInButton 0.6s ease-out backwards;
+    min-width: 180px; /* Give buttons a decent minimum width */
+    text-align: center;
+    flex-grow: 0; /* Prevent uneven growing if text lengths differ significantly */
+    flex-shrink: 0;
 }
 
 .home-button.yes {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Green */
     color: white;
-    animation-delay: 0.7s;
+    animation-delay: 0.7s; /* Stagger animation */
 }
 
 .home-button.yes:hover {
@@ -100,9 +104,9 @@
 }
 
 .home-button.no {
-    background-color: #f44336;
+    background-color: #f44336; /* Red */
     color: white;
-    animation-delay: 0.9s;
+    animation-delay: 0.9s; /* Stagger animation */
 }
 
 .home-button.no:hover {
@@ -125,12 +129,102 @@
 .home-footer {
     position: absolute;
     bottom: 20px;
+    left: 0; /* Center text by spanning width */
+    right: 0; /* Center text by spanning width */
+    text-align: center;
     font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8); /* Slightly more visible */
     animation: fadeIn 1s ease-out 1.5s backwards;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+
+/* === Responsive Adjustments for Home.css === */
+
+/* For tablets and medium screens */
+@media (max-width: 768px) {
+    .home-content {
+        padding: 40px 40px; /* Reduced padding */
+        width: 90%;
+    }
+
+    .home-title {
+        font-size: 2.2em; /* Smaller title */
+    }
+
+    .home-button {
+        padding: 14px 30px;
+        font-size: 1.1em;
+        min-width: 160px;
+    }
+
+    .home-buttons {
+        gap: 20px;
+    }
+}
+
+/* For smaller phones */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 15px;
+    }
+
+    .home-content {
+        padding: 30px 20px;
+        width: 95%;
+        border-radius: 15px;
+    }
+
+    .home-title {
+        font-size: 1.7em; /* Even smaller title */
+        line-height: 1.4;
+    }
+    .home-title:hover .app-name { /* Less dramatic hover for touch */
+        transform: scale(1.03) rotate(-1deg);
+        text-shadow: 0 0 8px #f0e68c, 0 0 15px #f0e68c;
+    }
+
+    .home-buttons {
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: center; /* Center stacked buttons */
+        gap: 15px;
+    }
+
+    .home-button {
+        padding: 12px 25px;
+        font-size: 1em;
+        width: 80%; /* Make buttons take more width when stacked */
+        max-width: 300px; /* But not too wide */
+        min-width: auto; /* Reset min-width when stacked */
+    }
+    /* Adjust hover for touch */
+    .home-button.yes:hover, .home-button.no:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 6px 15px rgba(0,0,0, 0.25); /* Generic shadow for simplicity */
+    }
+
+
+    .home-footer {
+        font-size: 0.8em;
+        bottom: 10px;
+    }
+}
+
+/* Very small screens - minor adjustments */
+@media (max-width: 360px) {
+    .home-content {
+        padding: 25px 15px;
+    }
+    .home-title {
+        font-size: 1.5em;
+    }
+    .home-button {
+        font-size: 0.95em;
+        padding: 10px 20px;
+        width: 90%; /* Almost full width */
+    }
 }

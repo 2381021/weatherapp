@@ -43,12 +43,12 @@
     box-sizing: border-box;
     overflow: hidden;
     animation: scaleUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s backwards;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease; /* Card hover transition */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
 }
 
 .weather:hover {
-    transform: translateY(-8px) scale(1.01); /* Lift and slightly enlarge card */
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35); /* Enhance shadow on hover */
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
 }
 
 /* === Search Bar === */
@@ -58,13 +58,8 @@
     gap: 12px;
     width: 100%;
     margin-bottom: 25px;
-    transition: transform 0.3s ease; /* Allow search bar to react if needed */
+    transition: transform 0.3s ease;
 }
-
-/* Optional: Search bar lifts slightly if the main card is hovered intensely */
-/* .weather:hover .search-bar {
-    transform: translateY(-3px);
-} */
 
 .search-bar input {
     flex-grow: 1;
@@ -77,7 +72,7 @@
     background-color: #ebfffc;
     font-size: 16px;
     box-sizing: border-box;
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Added transform transition */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     animation: fadeInUp 0.5s ease-out 0.3s backwards;
 }
 
@@ -87,13 +82,12 @@
 
 .search-bar input:focus {
     box-shadow: 0 0 0 3px rgba(137, 196, 244, 0.6);
-    transform: scale(1.01); /* Slight scale on focus */
+    transform: scale(1.01);
 }
 
-.search-bar input:hover:not(:focus) { /* Hover effect when not focused */
+.search-bar input:hover:not(:focus) {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
 
 .search-bar img.search-button-icon {
     width: 50px;
@@ -110,7 +104,7 @@
 
 .search-bar img.search-button-icon:hover {
     background-color: #d4f5f0;
-    transform: scale(1.18) rotate(20deg); /* Made hover more pronounced */
+    transform: scale(1.18) rotate(20deg);
 }
 
 .search-bar img.search-button-icon:active {
@@ -123,6 +117,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    flex-grow: 1;
 }
 
 .weather-content-animate > * {
@@ -142,12 +137,11 @@
     animation-iteration-count: 1, infinite;
     animation-delay: 0.2s, 0.9s;
     animation-fill-mode: forwards, none;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transform for hover */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .weather-icon:hover {
-    transform: scale(1.1) rotate(-5deg); /* Icon reacts to direct hover */
-    /* Pausing pulse might be too complex without JS, but transform overrides it visually */
+    transform: scale(1.1) rotate(-5deg);
 }
 
 .temperature {
@@ -157,13 +151,13 @@
     margin: 0;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
     animation-delay: 0.4s;
-    transition: transform 0.3s ease, color 0.3s ease; /* Added color transition */
-    cursor: default; /* Indicate it's not clickable, but can have hover */
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: default;
 }
 
 .temperature:hover {
     transform: scale(1.05);
-    color: #f0f8ff; /* Slightly lighter color on hover */
+    color: #f0f8ff;
 }
 
 .location {
@@ -173,60 +167,67 @@
     text-align: center;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     animation-delay: 0.6s;
-    transition: transform 0.3s ease, letter-spacing 0.3s ease; /* Added letter-spacing */
+    transition: transform 0.3s ease, letter-spacing 0.3s ease;
     cursor: default;
+    word-break: break-word;
 }
 
 .location:hover {
     transform: scale(1.03);
-    letter-spacing: 1px; /* Slightly increase letter spacing on hover */
+    letter-spacing: 1px;
 }
+
+.weather-description {
+    font-size: 1.1em;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    opacity: 0.9;
+    animation-delay: 0.7s;
+}
+
 
 /* === Additional Weather Data (Humidity, Wind) === */
 .weather-data {
-    width: 100%;
+    width: 100%; /* Ensures it takes full width to center its children if they don't fill it */
     margin-top: auto;
     padding-top: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: space-between; /* Default for larger screens */
+    align-items: flex-start; /* Default for larger screens */
+    gap: 10px;
     animation-delay: 0.8s;
-    transition: transform 0.3s ease; /* Make the whole block react slightly */
+    transition: transform 0.3s ease;
 }
-
-/* Optional: if card is hovered, weather-data block also moves a bit */
-/* .weather:hover .weather-data {
-    transform: translateY(-2px);
-} */
-
 
 .weather-data .col {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: center; /* Vertically align icon and text div */
+    gap: 10px; /* Gap between icon and text div */
     font-size: 18px;
-    text-align: left;
+    text-align: left; /* Text within the text div will be left-aligned */
     flex-basis: 45%;
-    padding: 12px; /* Slightly increased padding */
-    border-radius: 12px; /* Slightly more rounded */
-    transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; /* Bouncy transform */
-    cursor: pointer; /* Indicate these could be clickable (even if not wired up) */
+    min-width: 130px;
+    padding: 12px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .weather-data .col:hover {
-    background-color: rgba(255, 255, 255, 0.15); /* More visible hover background */
-    transform: translateY(-6px) scale(1.04); /* More lift and scale */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* Stronger shadow */
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .weather-data .col img {
     width: 28px;
     height: 28px;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy icon hover */
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .weather-data .col:hover img {
-    transform: rotate(-15deg) scale(1.2) translateY(-2px); /* More dynamic icon reaction */
+    transform: rotate(-15deg) scale(1.2) translateY(-2px);
 }
 
 .weather-data .col div p {
@@ -237,9 +238,8 @@
     transition: color 0.3s ease;
 }
 .weather-data .col:hover div p {
-    color: #e6e6fa; /* Lavender text on hover */
+    color: #e6e6fa;
 }
-
 
 .weather-data .col div span {
     display: block;
@@ -248,9 +248,8 @@
     transition: opacity 0.3s ease;
 }
 .weather-data .col:hover div span {
-    opacity: 1; /* Label becomes fully opaque on hover */
+    opacity: 1;
 }
-
 
 /* === Status Messages === */
 .status-message {
@@ -258,17 +257,220 @@
     font-size: 1.1em;
     text-align: center;
     animation: fadeIn 0.5s ease-out;
-    transition: color 0.3s ease; /* Allow status messages to have hover too */
+    transition: color 0.3s ease;
+    padding: 0 15px;
 }
 .status-message:hover {
-    color: #c0c0ff; /* Example hover for status messages */
+    color: #c0c0ff;
 }
 
+.loading-message {
+    color: #e0e0e0;
+}
 
 .error-message {
     color: #ffcdd2;
     font-weight: 500;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
 }
 .error-message:hover {
-    color: #ffb2b2; /* Darker red on hover for error */
+    color: #ffb2b2;
+}
+
+/* === Responsive Adjustments === */
+
+/* For tablets and larger phones */
+@media (max-width: 768px) {
+    .weather {
+        padding: 25px 20px;
+        min-height: 520px;
+    }
+
+    .weather-icon {
+        width: 120px;
+        margin: 15px 0;
+    }
+
+    .temperature {
+        font-size: 64px;
+    }
+
+    .location {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .weather-data .col {
+        font-size: 16px;
+        gap: 8px;
+        padding: 10px;
+        min-width: 120px;
+    }
+
+    .weather-data .col img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* For smaller phones */
+@media (max-width: 480px) {
+    .weather {
+        padding: 20px 15px;
+        min-height: auto;
+        border-radius: 15px;
+    }
+
+    .search-bar {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .search-bar input {
+        height: 45px;
+        padding: 0 18px;
+        font-size: 15px;
+        border-radius: 22px;
+    }
+
+    .search-bar img.search-button-icon {
+        width: 45px;
+        height: 45px;
+        padding: 10px;
+    }
+    .search-bar img.search-button-icon:hover {
+        transform: scale(1.1) rotate(10deg);
+    }
+
+    .weather-icon {
+        width: 100px;
+        margin: 10px 0 15px 0;
+    }
+    .weather-icon:hover {
+        transform: scale(1.05) rotate(-3deg);
+    }
+
+    .temperature {
+        font-size: 56px;
+    }
+    .temperature:hover {
+        transform: scale(1.02);
+    }
+
+    .location {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    .location:hover {
+        transform: scale(1.01);
+        letter-spacing: 0.5px;
+    }
+    
+    .weather-description {
+        font-size: 1em;
+        margin-top: -10px;
+        margin-bottom: 15px;
+    }
+
+    /* === STACKED & CENTERED .weather-data for smaller phones === */
+    .weather-data {
+        display: flex;            /* Explicitly ensure flex behavior */
+        flex-direction: column;   /* Stack .col items vertically */
+        align-items: center;      /* Horizontally center the .col items (the blocks themselves) */
+        gap: 15px;                /* Vertical gap between stacked items */
+        margin-top: 20px;
+        width: 100%;              /* Parent must have width for align-items to work as expected */
+    }
+
+    /* === STYLES FOR EACH STACKED BLOCK .weather-data .col === */
+    .weather-data .col {
+        /* display: flex; is inherited, align-items: center is inherited */
+        /* text-align: left; is inherited - content inside .col will be left-aligned */
+        
+        flex-basis: auto;        /* Reset from desktop */
+        min-width: auto;         /* Reset from desktop */
+        width: 80%;              /* Each block takes 80% of the .weather-data container's width */
+        max-width: 280px;        /* Cap the width of each block */
+        
+        padding: 12px 15px;      /* Adjust padding as needed */
+        font-size: 15px;         /* Adjust font size */
+        gap: 10px;               /* Internal gap between icon and text block, inherited is fine */
+        /* border-radius: 12px; is inherited */
+    }
+    /* Hover, img, p, span styles for .col are generally fine as inherited or with minor tweaks if needed */
+    .weather-data .col:hover {
+        transform: translateY(-4px) scale(1.02); /* Keep subtle hover */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .weather-data .col img {
+        width: 22px;
+        height: 22px;
+    }
+    .weather-data .col:hover img {
+        transform: rotate(-10deg) scale(1.1) translateY(-1px);
+    }
+    .weather-data .col div p {
+        font-size: 1em; /* Relative to .col's font-size */
+    }
+    .weather-data .col div span {
+        font-size: 0.8em; /* Relative to .col's font-size */
+    }
+    /* ====================================================================== */
+
+    .status-message {
+        font-size: 1em;
+        margin-top: 25px;
+    }
+}
+
+/* Very small screens - extra fine-tuning */
+@media (max-width: 360px) {
+    .weather {
+        padding: 15px 10px;
+    }
+    .search-bar input {
+        font-size: 14px;
+        padding: 0 15px;
+        height: 42px;
+    }
+    .search-bar img.search-button-icon {
+        width: 42px;
+        height: 42px;
+        padding: 9px;
+    }
+    .temperature {
+        font-size: 48px;
+    }
+    .location {
+        font-size: 20px;
+    }
+
+    /* === STACKED & CENTERED .weather-data for very small screens === */
+    .weather-data {
+        gap: 12px; /* Slightly smaller vertical gap */
+        /* Inherits flex-direction: column and align-items: center from 480px rule */
+    }
+
+    /* === STYLES FOR EACH STACKED BLOCK .weather-data .col === */
+    .weather-data .col {
+        width: 90%;       /* Make them a bit wider on very small screens */
+        font-size: 14px;  /* Smaller font for very small screens */
+        padding: 10px 12px; /* Adjust padding */
+        gap: 8px;         /* Adjust internal gap in .col */
+        /* min-width: auto; inherited */
+    }
+    .weather-data .col img {
+        width: 20px;
+        height: 20px;
+    }
+    /* Other .col styles like p, span font sizes for 360px are fine if inherited or slightly adjusted */
+    .weather-data .col div p {
+        font-size: 1em; /* Fine as is */
+    }
+    .weather-data .col div span {
+        font-size: 0.75em; /* Fine as is */
+    }
+    /* ========================================================================== */
 }
