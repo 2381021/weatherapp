@@ -1,30 +1,8 @@
 /* === Keyframes for Animations === */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes scaleUp {
-    from { transform: scale(0.8); opacity: 0;}
-    to { transform: scale(1); opacity: 1;}
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
 /* === Main Weather Card === */
 .weather {
@@ -38,29 +16,24 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* This should keep .location, .temperature centered */
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     overflow: hidden;
     animation: scaleUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s backwards;
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
 }
+.weather:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35); }
 
-.weather:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
-}
-
-/* === Search Bar === */
+/* === Search Bar (Reverted to a more stable base and integrated) === */
 .search-bar {
     display: flex;
     align-items: center;
     gap: 12px;
     width: 100%;
     margin-bottom: 25px;
-    transition: transform 0.3s ease;
+    box-sizing: border-box;
 }
-
 .search-bar input {
     flex-grow: 1;
     height: 50px;
@@ -75,20 +48,9 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     animation: fadeInUp 0.5s ease-out 0.3s backwards;
 }
-
-.search-bar input::placeholder {
-    color: #777;
-}
-
-.search-bar input:focus {
-    box-shadow: 0 0 0 3px rgba(137, 196, 244, 0.6);
-    transform: scale(1.01);
-}
-
-.search-bar input:hover:not(:focus) {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
+.search-bar input::placeholder { color: #777; }
+.search-bar input:focus { box-shadow: 0 0 0 3px rgba(137, 196, 244, 0.6); transform: scale(1.01); }
+.search-bar input:hover:not(:focus) { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .search-bar img.search-button-icon {
     width: 50px;
     height: 50px;
@@ -97,380 +59,145 @@
     background-color: #ebfffc;
     cursor: pointer;
     box-sizing: border-box;
+    flex-shrink: 0; /* Essential to prevent icon squishing */
     transition: background-color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
     animation: fadeInUp 0.5s ease-out 0.4s backwards;
 }
-
-.search-bar img.search-button-icon:hover {
-    background-color: #d4f5f0;
-    transform: scale(1.18) rotate(20deg);
-}
-
-.search-bar img.search-button-icon:active {
-    transform: scale(1.08) rotate(10deg);
-}
+.search-bar img.search-button-icon:hover { background-color: #d4f5f0; transform: scale(1.18) rotate(20deg); }
+.search-bar img.search-button-icon:active { transform: scale(1.08) rotate(10deg); }
 
 /* === Animated Content Wrapper === */
 .weather-content-animate {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* This centers .weather-icon, .temperature, .location */
     width: 100%;
     flex-grow: 1;
 }
+.weather-content-animate > * { opacity: 0; animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 
-.weather-content-animate > * {
-    opacity: 0;
-    animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-/* === Main Weather Display === */
+/* === Main Weather Display (Should be centered by .weather-content-animate's align-items:center) === */
 .weather-icon {
-    width: 140px;
-    height: auto;
-    margin: 20px 0;
-    animation-delay: 0.2s;
-    animation-name: fadeInUp, pulse;
-    animation-duration: 0.7s, 3s;
+    width: 140px; height: auto; margin: 20px 0; animation-delay: 0.2s;
+    animation-name: fadeInUp, pulse; animation-duration: 0.7s, 3s;
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1), ease-in-out;
-    animation-iteration-count: 1, infinite;
-    animation-delay: 0.2s, 0.9s;
-    animation-fill-mode: forwards, none;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation-iteration-count: 1, infinite; animation-delay: 0.2s, 0.9s;
+    animation-fill-mode: forwards, none; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-.weather-icon:hover {
-    transform: scale(1.1) rotate(-5deg);
-}
+.weather-icon:hover { transform: scale(1.1) rotate(-5deg); }
 
 .temperature {
-    font-size: 72px;
-    font-weight: 600;
-    line-height: 1;
-    margin: 0;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
-    animation-delay: 0.4s;
-    transition: transform 0.3s ease, color 0.3s ease;
-    cursor: default;
+    font-size: 72px; font-weight: 600; line-height: 1; margin: 0;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.15); animation-delay: 0.4s;
+    transition: transform 0.3s ease, color 0.3s ease; cursor: default;
 }
+.temperature:hover { transform: scale(1.05); color: #f0f8ff; }
 
-.temperature:hover {
-    transform: scale(1.05);
-    color: #f0f8ff;
+.location { /* text-align: center here ensures the text within this block is centered */
+    font-size: 36px; font-weight: 400; margin-bottom: 25px; text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1); animation-delay: 0.6s;
+    transition: transform 0.3s ease, letter-spacing 0.3s ease; cursor: default; word-break: break-word;
 }
-
-.location {
-    font-size: 36px;
-    font-weight: 400;
-    margin-bottom: 25px;
-    text-align: center;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-    animation-delay: 0.6s;
-    transition: transform 0.3s ease, letter-spacing 0.3s ease;
-    cursor: default;
-    word-break: break-word;
-}
-
-.location:hover {
-    transform: scale(1.03);
-    letter-spacing: 1px;
-}
+.location:hover { transform: scale(1.03); letter-spacing: 1px; }
 
 .weather-description {
-    font-size: 1.1em;
-    margin-top: -15px;
-    margin-bottom: 20px;
-    text-transform: capitalize;
-    opacity: 0.9;
-    animation-delay: 0.7s;
+    font-size: 1.1em; margin-top: -15px; margin-bottom: 20px;
+    text-transform: capitalize; opacity: 0.9; animation-delay: 0.7s;
 }
-
 
 /* === Additional Weather Data (Humidity, Wind) === */
 .weather-data {
-    width: 100%; /* Ensures it takes full width to center its children if they don't fill it */
-    margin-top: auto;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between; /* Default for larger screens */
-    align-items: flex-start; /* Default for larger screens */
-    gap: 10px;
-    animation-delay: 0.8s;
-    transition: transform 0.3s ease;
+    width: 100%; margin-top: auto; padding-top: 15px; display: flex;
+    justify-content: space-between; align-items: flex-start; gap: 10px;
+    animation-delay: 0.8s; transition: transform 0.3s ease;
 }
-
 .weather-data .col {
-    display: flex;
-    align-items: center; /* Vertically align icon and text div */
-    gap: 10px; /* Gap between icon and text div */
-    font-size: 18px;
-    text-align: left; /* Text within the text div will be left-aligned */
-    flex-basis: 45%;
-    min-width: 130px;
-    padding: 12px;
+    display: flex; align-items: center; gap: 10px; font-size: 18px;
+    text-align: left; flex-basis: 45%; min-width: 130px; padding: 12px;
     border-radius: 12px;
     transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
     cursor: pointer;
 }
-
-.weather-data .col:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-6px) scale(1.04);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-}
-
-.weather-data .col img {
-    width: 28px;
-    height: 28px;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.weather-data .col:hover img {
-    transform: rotate(-15deg) scale(1.2) translateY(-2px);
-}
-
-.weather-data .col div p {
-    font-size: 1.1em;
-    font-weight: 500;
-    margin: 0 0 2px 0;
-    line-height: 1.2;
-    transition: color 0.3s ease;
-}
-.weather-data .col:hover div p {
-    color: #e6e6fa;
-}
-
-.weather-data .col div span {
-    display: block;
-    font-size: 0.8em;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-}
-.weather-data .col:hover div span {
-    opacity: 1;
-}
+.weather-data .col:hover { background-color: rgba(255, 255, 255, 0.15); transform: translateY(-6px) scale(1.04); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+.weather-data .col img { width: 28px; height: 28px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.weather-data .col:hover img { transform: rotate(-15deg) scale(1.2) translateY(-2px); }
+.weather-data .col div p { font-size: 1.1em; font-weight: 500; margin: 0 0 2px 0; line-height: 1.2; transition: color 0.3s ease; }
+.weather-data .col:hover div p { color: #e6e6fa; }
+.weather-data .col div span { display: block; font-size: 0.8em; opacity: 0.9; transition: opacity 0.3s ease; }
+.weather-data .col:hover div span { opacity: 1; }
 
 /* === Status Messages === */
-.status-message {
-    margin-top: 30px;
-    font-size: 1.1em;
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-    transition: color 0.3s ease;
-    padding: 0 15px;
-}
-.status-message:hover {
-    color: #c0c0ff;
-}
-
-.loading-message {
-    color: #e0e0e0;
-}
-
-.error-message {
-    color: #ffcdd2;
-    font-weight: 500;
-    background-color: rgba(255, 0, 0, 0.1);
-    padding: 10px 15px;
-    border-radius: 8px;
-}
-.error-message:hover {
-    color: #ffb2b2;
-}
+.status-message { margin-top: 30px; font-size: 1.1em; text-align: center; animation: fadeIn 0.5s ease-out; transition: color 0.3s ease; padding: 0 15px; }
+.status-message:hover { color: #c0c0ff; }
+.loading-message { color: #e0e0e0; }
+.error-message { color: #ffcdd2; font-weight: 500; background-color: rgba(255, 0, 0, 0.1); padding: 10px 15px; border-radius: 8px; }
+.error-message:hover { color: #ffb2b2; }
 
 /* === Responsive Adjustments === */
-
-/* For tablets and larger phones */
 @media (max-width: 768px) {
-    .weather {
-        padding: 25px 20px;
-        min-height: 520px;
-    }
-
-    .weather-icon {
-        width: 120px;
-        margin: 15px 0;
-    }
-
-    .temperature {
-        font-size: 64px;
-    }
-
-    .location {
-        font-size: 30px;
-        margin-bottom: 20px;
-    }
-
-    .weather-data .col {
-        font-size: 16px;
-        gap: 8px;
-        padding: 10px;
-        min-width: 120px;
-    }
-
-    .weather-data .col img {
-        width: 24px;
-        height: 24px;
-    }
+    .weather { padding: 25px 20px; min-height: 520px; }
+    .weather-icon { width: 120px; margin: 15px 0; }
+    .temperature { font-size: 64px; }
+    .location { font-size: 30px; margin-bottom: 20px; }
+    /* Search bar 768px */
+    .search-bar { gap: 10px; }
+    .search-bar input { height: 48px; font-size: 15px; padding: 0 18px; }
+    .search-bar img.search-button-icon { width: 48px; height: 48px; padding: 11px; }
+    /* Weather data col 768px */
+    .weather-data .col { font-size: 16px; gap: 8px; padding: 10px; min-width: 120px; }
+    .weather-data .col img { width: 24px; height: 24px; }
 }
 
-/* For smaller phones */
 @media (max-width: 480px) {
-    .weather {
-        padding: 20px 15px;
-        min-height: auto;
-        border-radius: 15px;
-    }
-
-    .search-bar {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .search-bar input {
-        height: 45px;
-        padding: 0 18px;
-        font-size: 15px;
-        border-radius: 22px;
-    }
-
-    .search-bar img.search-button-icon {
-        width: 45px;
-        height: 45px;
-        padding: 10px;
-    }
-    .search-bar img.search-button-icon:hover {
-        transform: scale(1.1) rotate(10deg);
-    }
-
-    .weather-icon {
-        width: 100px;
-        margin: 10px 0 15px 0;
-    }
-    .weather-icon:hover {
-        transform: scale(1.05) rotate(-3deg);
-    }
-
-    .temperature {
-        font-size: 56px;
-    }
-    .temperature:hover {
-        transform: scale(1.02);
-    }
-
-    .location {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    .location:hover {
-        transform: scale(1.01);
-        letter-spacing: 0.5px;
-    }
-    
-    .weather-description {
-        font-size: 1em;
-        margin-top: -10px;
-        margin-bottom: 15px;
-    }
-
-    /* === STACKED & CENTERED .weather-data for smaller phones === */
+    .weather { padding: 20px 15px; min-height: auto; border-radius: 15px; }
+    /* Search bar 480px */
+    .search-bar { gap: 8px; margin-bottom: 20px; }
+    .search-bar input { height: 45px; font-size: 15px; padding: 0 15px; border-radius: 22px; }
+    .search-bar img.search-button-icon { width: 45px; height: 45px; padding: 10px; }
+    .search-bar img.search-button-icon:hover { transform: scale(1.1) rotate(10deg); } /* Adjust hover for touch */
+    /* Main display 480px */
+    .weather-icon { width: 100px; margin: 10px 0 15px 0; }
+    .weather-icon:hover { transform: scale(1.05) rotate(-3deg); }
+    .temperature { font-size: 56px; }
+    .temperature:hover { transform: scale(1.02); }
+    .location { font-size: 24px; margin-bottom: 15px; } /* text-align: center is inherited */
+    .location:hover { transform: scale(1.01); letter-spacing: 0.5px; }
+    .weather-description { font-size: 1em; margin-top: -10px; margin-bottom: 15px; }
+    /* STACKED & CENTERED .weather-data for smaller phones */
     .weather-data {
-        display: flex;            /* Explicitly ensure flex behavior */
-        flex-direction: column;   /* Stack .col items vertically */
-        align-items: center;      /* Horizontally center the .col items (the blocks themselves) */
-        gap: 15px;                /* Vertical gap between stacked items */
-        margin-top: 20px;
-        width: 100%;              /* Parent must have width for align-items to work as expected */
+        display: flex; flex-direction: column; align-items: center;
+        gap: 15px; margin-top: 20px; width: 100%;
     }
-
-    /* === STYLES FOR EACH STACKED BLOCK .weather-data .col === */
     .weather-data .col {
-        /* display: flex; is inherited, align-items: center is inherited */
-        /* text-align: left; is inherited - content inside .col will be left-aligned */
-        
-        flex-basis: auto;        /* Reset from desktop */
-        min-width: auto;         /* Reset from desktop */
-        width: 80%;              /* Each block takes 80% of the .weather-data container's width */
-        max-width: 280px;        /* Cap the width of each block */
-        
-        padding: 12px 15px;      /* Adjust padding as needed */
-        font-size: 15px;         /* Adjust font size */
-        gap: 10px;               /* Internal gap between icon and text block, inherited is fine */
-        /* border-radius: 12px; is inherited */
+        flex-basis: auto; min-width: auto; width: 80%; max-width: 280px;
+        justify-content: flex-start; /* Content within .col left-aligned */
+        padding: 12px 15px; font-size: 15px;
+        /* text-align: left; is inherited */
     }
-    /* Hover, img, p, span styles for .col are generally fine as inherited or with minor tweaks if needed */
-    .weather-data .col:hover {
-        transform: translateY(-4px) scale(1.02); /* Keep subtle hover */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .weather-data .col img {
-        width: 22px;
-        height: 22px;
-    }
-    .weather-data .col:hover img {
-        transform: rotate(-10deg) scale(1.1) translateY(-1px);
-    }
-    .weather-data .col div p {
-        font-size: 1em; /* Relative to .col's font-size */
-    }
-    .weather-data .col div span {
-        font-size: 0.8em; /* Relative to .col's font-size */
-    }
-    /* ====================================================================== */
-
-    .status-message {
-        font-size: 1em;
-        margin-top: 25px;
-    }
+    .weather-data .col:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .weather-data .col img { width: 22px; height: 22px; }
+    .weather-data .col:hover img { transform: rotate(-10deg) scale(1.1) translateY(-1px); }
+    .weather-data .col div p { font-size: 1em; }
+    .weather-data .col div span { font-size: 0.8em; }
+    .status-message { font-size: 1em; margin-top: 25px; }
 }
 
-/* Very small screens - extra fine-tuning */
 @media (max-width: 360px) {
-    .weather {
-        padding: 15px 10px;
-    }
-    .search-bar input {
-        font-size: 14px;
-        padding: 0 15px;
-        height: 42px;
-    }
-    .search-bar img.search-button-icon {
-        width: 42px;
-        height: 42px;
-        padding: 9px;
-    }
-    .temperature {
-        font-size: 48px;
-    }
-    .location {
-        font-size: 20px;
-    }
-
-    /* === STACKED & CENTERED .weather-data for very small screens === */
-    .weather-data {
-        gap: 12px; /* Slightly smaller vertical gap */
-        /* Inherits flex-direction: column and align-items: center from 480px rule */
-    }
-
-    /* === STYLES FOR EACH STACKED BLOCK .weather-data .col === */
+    .weather { padding: 15px 10px; }
+    /* Search bar 360px */
+    .search-bar { gap: 6px; }
+    .search-bar input { font-size: 14px; padding: 0 12px; height: 42px; border-radius: 21px; }
+    .search-bar img.search-button-icon { width: 42px; height: 42px; padding: 9px; }
+    /* Main display 360px */
+    .temperature { font-size: 48px; }
+    .location { font-size: 20px; } /* text-align: center is inherited */
+    /* STACKED & CENTERED .weather-data for very small screens */
+    .weather-data { gap: 12px; }
     .weather-data .col {
-        width: 90%;       /* Make them a bit wider on very small screens */
-        font-size: 14px;  /* Smaller font for very small screens */
-        padding: 10px 12px; /* Adjust padding */
-        gap: 8px;         /* Adjust internal gap in .col */
-        /* min-width: auto; inherited */
+        width: 90%; font-size: 14px; padding: 10px 12px; gap: 8px;
+        /* text-align: left; is inherited */
     }
-    .weather-data .col img {
-        width: 20px;
-        height: 20px;
-    }
-    /* Other .col styles like p, span font sizes for 360px are fine if inherited or slightly adjusted */
-    .weather-data .col div p {
-        font-size: 1em; /* Fine as is */
-    }
-    .weather-data .col div span {
-        font-size: 0.75em; /* Fine as is */
-    }
-    /* ========================================================================== */
+    .weather-data .col img { width: 20px; height: 20px; }
+    .weather-data .col div p { font-size: 1em; }
+    .weather-data .col div span { font-size: 0.75em; }
 }
