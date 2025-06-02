@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Weather.css';
-import search_icon from '../assets/search.png'; // Assuming this path is now correct
+import search_icon from '../assets/search.png';
 import clear_icon from '../assets/clear.png';
 import cloud_icon from '../assets/cloud.png';
 import drizzle_icon from '../assets/drizzle.png';
@@ -11,7 +11,9 @@ import wind_icon from '../assets/wind.png';
 
 const Weather = () => {
     const inputRef = useRef();
-    const [weatherData, setWeatherData] = useState(null); // Changed initial state to null
+    const [weatherData, setWeatherData] = useState(null);
+    const [loading, setLoading] = useState(true); // Added for loading state
+    const [error, setError] = useState(null); // Added for error state
 
     const allIcons = {
         "01d": clear_icon,
@@ -31,24 +33,26 @@ const Weather = () => {
     };
 
     const search = async (city) => {
-        if (!city || city.trim() === "") { // Check for empty or whitespace-only city
+        if (!city || city.trim() === "") {
             alert("Enter city name");
             return;
         }
+        setLoading(true); // Set loading true at the start of search
+        setError(null);   // Clear previous errors
+        // setWeatherData(null); // Optionally clear previous data immediately
+
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
-
             const response = await fetch(url);
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.message || "City not found or API error."); // More robust error
-                setWeatherData(null); // Clear data on error
+                setError(data.message || "City not found or API error.");
+                setWeatherData(null);
+                setLoading(false); // Set loading false on error
                 return;
             }
 
-            console.log(data);
-            // Defensive check for weather data and icon
             const iconCode = data.weather && data.weather[0] ? data.weather[0].icon : "01d";
             const icon = allIcons[iconCode] || clear_icon;
 
@@ -59,16 +63,18 @@ const Weather = () => {
                 location: data.name,
                 icon: icon,
             });
-        } catch (error) {
-            setWeatherData(null); // Clear data on error
-            console.error("Error in fetching weather data:", error); // Log the actual error
-            alert("An error occurred while fetching weather data. Please try again.");
+        } catch (err) { // Catch specific error object
+            setError("An error occurred while fetching weather data. Please try again.");
+            setWeatherData(null);
+            console.error("Error in fetching weather data:", err);
+        } finally {
+            setLoading(false); // Set loading false when search is complete (success or caught error)
         }
     };
 
     useEffect(() => {
-        search("New York");
-    }, []); // Empty dependency array: runs once on mount
+        search("New York"); // Initial search
+    }, []);
 
     return (
         <div className='weather'>
@@ -76,7 +82,7 @@ const Weather = () => {
                 <input
                     ref={inputRef}
                     type="text"
-                    placeholder='Search'
+                    placeholder='Search City' // Changed placeholder
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             search(inputRef.current.value);
@@ -85,30 +91,28 @@ const Weather = () => {
                 />
                 <img
                     src={search_icon}
-                    alt="Search Icon" // Added alt text
+                    alt="Search Icon"
+                    className="search-button-icon" // Added class for specific styling/animation
                     onClick={() => search(inputRef.current.value)}
                 />
             </div>
 
-            {/* Conditional rendering for loading/error/data states */}
-            {!weatherData && <p>Loading weather for New York or enter a city...</p>} 
-            {/* You might want a more sophisticated loading/error state later */}
+            {loading && <p className='status-message'>Loading weather data...</p>}
+            {error && <p className='status-message error-message'>{error}</p>}
 
-            {weatherData && (
-                <>
+            {!loading && !error && weatherData && (
+                <div className="weather-content-animate"> {/* Wrapper for animating content entry */}
                     <img src={weatherData.icon} alt="Weather condition icon" className='weather-icon' />
                     <p className='temperature'>{weatherData.temperature}°C</p>
                     <p className='location'>{weatherData.location}</p>
                     <div className="weather-data">
-                        {/* Column 1: Humidity */}
                         <div className="col">
                             <img src={humidity_icon} alt="Humidity icon" />
                             <div>
-                                <p>{weatherData.humidity}%</p> {/* Added % unit */}
+                                <p>{weatherData.humidity}%</p>
                                 <span>Humidity</span>
                             </div>
                         </div>
-                        {/* Column 2: Wind Speed - This was nested incorrectly before, fixing it */}
                         <div className="col">
                             <img src={wind_icon} alt="Wind speed icon" />
                             <div>
@@ -117,7 +121,11 @@ const Weather = () => {
                             </div>
                         </div>
                     </div>
-                </>
+                </div>
+            )}
+            {/* Message if no data is available and not loading/error */}
+            {!loading && !error && !weatherData && (
+                <p className='status-message'>No weather data to display. Try searching for a city.</p>
             )}
         </div>
     );
