@@ -1,0 +1,133 @@
+/* === Main Weather Card === */
+.weather {
+    place-self: center; /* Centers the card if its parent is a grid or flex container */
+    width: 90%; /* More responsive than max-content for this use case */
+    max-width: 400px; /* Set a max-width for larger screens */
+    min-height: 550px; /* Give it some minimum height */
+    padding: 30px 25px; /* Slightly adjusted padding (top/bottom left/right) */
+    border-radius: 20px;
+    background-image: linear-gradient(45deg, #2f4680, #500ae4);
+    color: #fff; /* Default text color for the card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Added a subtle shadow */
+    box-sizing: border-box; /* Ensures padding and border are included in width/height */
+}
+
+/* === Search Bar === */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%; /* Make search bar take up full width of .weather's content box */
+    margin-bottom: 25px; /* Space below the search bar */
+}
+
+.search-bar input {
+    flex-grow: 1; /* Allows input to take available space */
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 25px; /* Matched common modern input style */
+    padding: 0 20px; /* Adjusted padding (no need for specific padding-left) */
+    color: #333; /* Darker color for better readability */
+    background-color: #ebfffc;
+    font-size: 16px; /* Slightly smaller for a cleaner look */
+    box-sizing: border-box;
+}
+
+.search-bar input::placeholder {
+    color: #777; /* Softer placeholder color */
+}
+
+.search-bar img {
+    width: 50px;
+    height: 50px; /* Make it a square for consistent padding effect */
+    padding: 12px; /* Padding all around */
+    border-radius: 50%;
+    background-color: #ebfffc;
+    cursor: pointer;
+    box-sizing: border-box; /* Include padding in width/height */
+    transition: background-color 0.2s ease, transform 0.2s ease; /* For hover effects */
+    flex-shrink: 0; /* Prevent icon from shrinking if input text is long */
+}
+
+.search-bar img:hover {
+    background-color: #d0f0f0; /* Slightly different background on hover */
+    transform: scale(1.1);
+}
+
+/* === Main Weather Display === */
+.weather-icon {
+    width: 140px; /* Slightly adjusted */
+    height: auto; /* Maintain aspect ratio */
+    margin: 25px 0; /* Adjusted margin */
+}
+
+.temperature {
+    /* color: #fff; Inherited from .weather */
+    font-size: 72px; /* Slightly adjusted */
+    font-weight: 500; /* Added font weight */
+    line-height: 1;
+    margin: 5px 0 0 0; /* Adjusted margin */
+}
+
+.location {
+    /* color: #fff; Inherited from .weather */
+    font-size: 36px; /* Slightly adjusted */
+    font-weight: 400;
+    margin-bottom: 30px; /* Space before weather data */
+    text-align: center; /* Ensure it's centered if text wraps */
+}
+
+/* === Additional Weather Data (Humidity, Wind) === */
+.weather-data {
+    width: 100%;
+    margin-top: auto; /* Pushes this section towards the bottom if there's extra space */
+    padding-top: 20px; /* Add some space above if pushed by margin-top: auto */
+    /* color: #fff; Inherited from .weather */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align columns to their top */
+}
+
+.weather-data .col {
+    display: flex;
+    align-items: center; /* Vertically center icon and text within the column */
+    gap: 10px; /* Slightly reduced gap */
+    font-size: 18px; /* Base font size for the column data */
+    text-align: left; /* Default, but good to be explicit */
+    flex-basis: 45%; /* Give some basis for better spacing with space-between */
+}
+
+.weather-data .col img {
+    width: 28px; /* Slightly larger for better visibility */
+    height: 28px;
+    /* margin-top: 10px; Removed as align-items: center on .col handles vertical alignment */
+}
+
+.weather-data .col div p { /* Target the <p> tag for the value */
+    font-size: 1.1em; /* Relative to .col font-size (e.g., 18px * 1.1) */
+    font-weight: 500;
+    margin: 0 0 2px 0; /* Small margin below the value */
+    line-height: 1.2;
+}
+
+.weather-data .col div span { /* Target the <span> for the label */
+    display: block;
+    font-size: 0.8em; /* Relative to .col font-size (e.g., 18px * 0.8) */
+    opacity: 0.9; /* Slightly less prominent label */
+}
+
+/* Optional: Add a status message style if you use it in JS */
+.status-message {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.error-message {
+    color: #ffdddd; /* Light red for errors */
+    font-weight: bold;
+}
