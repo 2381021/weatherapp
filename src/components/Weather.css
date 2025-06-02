@@ -129,27 +129,26 @@
 .temperature:hover { transform: scale(1.05); color: #f0f8ff; }
 
 .location { /* text-align: center here ensures the text within this block is centered */
-    font-size: 36px; font-weight: 400; margin-bottom: 25px; text-align: center;
+    font-size: 36px; font-weight: 400; margin-bottom: 2px; text-align: center;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1); animation-delay: 0.6s;
     transition: transform 0.3s ease, letter-spacing 0.3s ease; cursor: default; word-break: break-word;
 }
 .location:hover { transform: scale(1.03); letter-spacing: 1px; }
 
 .weather-description {
-    font-size: 1.1em; margin-top: -15px; margin-bottom: 20px;
+    font-size: 1.1em; margin-top: 5px; margin-bottom: 0;
     text-transform: capitalize; opacity: 0.9; animation-delay: 0.7s;
 }
 
 /* === Additional Weather Data (Humidity, Wind) === */
 .weather-data {
-    width: 100%; margin-top: auto; padding-top: 15px; display: flex;
-    justify-content: space-between; align-items: flex-start; gap: 10px;
+    width: auto; margin-top: auto; padding-top: 0; display: flex;
+    justify-content: center; align-items: center; gap: 0;
     animation-delay: 0.8s; transition: transform 0.3s ease;
+    text-align: center;
 }
 .weather-data .col {
-    display: flex; align-items: center; gap: 10px; font-size: 18px;
-    text-align: left; flex-basis: 45%; min-width: 130px; padding: 12px;
-    border-radius: 12px;
+    
     transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
     cursor: pointer;
 }
